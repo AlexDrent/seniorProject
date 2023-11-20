@@ -1,16 +1,43 @@
-<p style="color: green"><%= notice %></p>
-
+<% if user_signed_in? %>
 <h1>Tasks</h1>
 
-<div id="tasks">
-  <% @tasks.each do |task| %>
-    <% if task.user == current_user %>
-    <%= render task %>
-    <p>
-      <%= link_to "Show this task", task %>
-    </p>
+<table class="table table-stried table-bordered table-hover">
+  <thead class="thead-dark">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Due</th>
+        <th>Tag</th>
+        <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @tasks.each do |task| %>
+        <% if task.user == current_user %>
+            <tr>
+              <td>
+                <%= task.name %>
+              </td>
+              <td>
+                <%= task.description %>
+              </td>
+              <td>
+                <%= task.due %>
+              </td>
+              <td>
+                <%= task.tag %>
+              </td>
+              <td>
+                <%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" %>
+                <%= link_to 'edit', task, class: "btn btn-secondary" %>
+
+              </td>
+            </tr>
+
       <% end %>
   <% end %>
-</div>
+  </tbody>
+</table>
 
-<%= link_to "New task", new_task_path %>
+  <%= link_to 'New task', new_task_path, class:"btn btn-secondary" %>
+<% end %>
